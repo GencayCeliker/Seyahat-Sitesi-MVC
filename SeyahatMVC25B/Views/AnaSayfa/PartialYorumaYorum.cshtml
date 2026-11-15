@@ -1,0 +1,253 @@
+﻿
+
+@using SeyahatMVC25B.Models;
+@model List<TBLYORUMLAR>
+
+
+
+
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 6vw;
+            color: #FFD600;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }
+
+    h1, p {
+        text-align: center
+    }
+
+    h1 {
+        margin-top: 150px
+    }
+
+    p {
+        font-size: 1.2rem
+    }
+
+    @@media only screen and (max-width: 600px) {
+        h1 {
+            font-size: 14px
+        }
+
+        p {
+            font-size: 12px
+        }
+    }
+</style>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+<h2>YorumaYorum</h2>
+
+<div class="container">
+    <div class="comment_area section_padding_50 clearfix">
+        <h4 class="mb-30">@Model.Count Yorum</h4>
+
+        <ol>
+            @foreach (var x in Model.Where(x => x.USTYID == 0))
+            {
+                <li class="single_comment_area">
+                    <div class="comment-wrapper d-flex">
+                        <div class="comment-author">
+                            <img src="~/ResimlerGezi/user.png" alt="">
+                        </div>
+                        <div class="comment-content">
+                            <span class="comment-date text-muted">@x.TARIH</span>
+                            <h5>@x.ADSOYAD</h5>
+                            <p>@x.YORUM</p>
+                            <a href="#">Beğen</a>
+                            <button type="button" class="btn btn-sm btn-outline-primary reply-btn">
+                                Cevap Yaz
+                            </button>
+
+
+
+                            <div class="reply-box" style="display:none; margin-top:10px;background-color:lightgoldenrodyellow;border:5px solid gray;padding:20px;">
+
+                                @using (Html.BeginForm("PartialYorumKaydet2", "AnaSayfa", FormMethod.Post))
+                                {
+                                    <span>BLOGID (hidden yap)</span>
+                                    <input type="text" name="USTYID" value="@x.ID" class="form-control" />
+                                    <span>UST YORUM ID (hidden yap)</span>
+                                    <input type="text" name="BLOGID" value="@ViewBag.idd" class="form-control" />
+                                    <input type="text" name="ADSOYAD" placeholder="Adınız..." class="form-control" />
+                                    <div class="rating">
+                                        <input type="radio" name="YILDIZ-@x.ID" value="5" id="5-@x.ID"><label for="5-@x.ID">☆</label>
+                                        <input type="radio" name="YILDIZ-@x.ID" value="4" id="4-@x.ID"><label for="4-@x.ID">☆</label>
+                                        <input type="radio" name="YILDIZ-@x.ID" value="3" id="3-@x.ID"><label for="3-@x.ID">☆</label>
+                                        <input type="radio" name="YILDIZ-@x.ID" value="2" id="2-@x.ID"><label for="2-@x.ID">☆</label>
+                                        <input type="radio" name="YILDIZ-@x.ID" value="1" id="1-@x.ID"><label for="1-@x.ID">☆</label>
+
+                                    </div>
+
+                                    <textarea name="Yorum" class="form-control mb-2" placeholder="Cevabınızı yazın..."></textarea>
+
+                                    <button type="submit" class="btn btn-success btn-sm">Gönder</button>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <ol class="children">
+                        @foreach (var s in Model.Where(z => z.USTYID == x.ID))
+                        {
+                            <li class="single_comment_area">
+                                <div class="comment-wrapper d-flex">
+                                    <div class="comment-author">
+                                        <img src="~/ResimlerGezi/user.png" alt="">
+                                    </div>
+                                    <div class="comment-content">
+                                        <span class="comment-date text-muted">@s.TARIH</span>
+                                        <h5>@s.ADSOYAD</h5>
+                                        <p>@s.YORUM</p>
+                                        <a href="#">Beğen</a>
+                                        <button type="button" class="btn btn-sm btn-outline-primary reply-btn" data-id="@s.ID">
+                                            Cevap Yaz
+                                        </button>
+
+                                        <div class="reply-box" style="display:none; margin-top:10px;background-color:lightgoldenrodyellow;border:5px solid gray;padding:20px;">
+
+                                            @using (Html.BeginForm("PartialYorumKaydet2", "AnaSayfa", FormMethod.Post))
+                                            {
+                                                <span>UST YORUMID</span>
+                                                <input type="text" name="USTYID" value="@s.ID" class="form-control" />
+                                                <span>BLOG ID</span>
+                                                <input type="text" name="BLOGID" value="@ViewBag.idd" class="form-control" />
+                                                <input type="text" name="ADSOYAD" placeholder="Adınız..." class="form-control" />
+                                                <div class="rating">
+                                                    <input type="radio" name="YILDIZ-@s.ID" value="5" id="5-@s.ID"><label for="5-@s.ID">☆</label>
+                                                    <input type="radio" name="YILDIZ-@s.ID" value="4" id="4-@s.ID"><label for="4-@s.ID">☆</label>
+                                                    <input type="radio" name="YILDIZ-@s.ID" value="3" id="3-@s.ID"><label for="3-@s.ID">☆</label>
+                                                    <input type="radio" name="YILDIZ-@s.ID" value="2" id="2-@s.ID"><label for="2-@s.ID">☆</label>
+                                                    <input type="radio" name="YILDIZ-@s.ID" value="1" id="1-@s.ID"><label for="1-@s.ID">☆</label>
+                                                </div>
+                                                <textarea name="Yorum" class="form-control mb-2" placeholder="Cevabınızı yazın..."></textarea>
+
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    Gönder
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <ol class="children">
+                                    @foreach (var a in Model.Where(z => z.USTYID == s.ID))
+                                    {
+                                        <li class="single_comment_area">
+                                            <div class="comment-wrapper d-flex">
+                                                <div class="comment-author">
+                                                    <img src="~/ResimlerGezi/user.png" alt="">
+                                                </div>
+                                                <div class="comment-content">
+                                                    <span class="comment-date text-muted">@a.TARIH</span>
+                                                    <h5>@a.ADSOYAD</h5>
+                                                    <p>@a.YORUM</p>
+                                                    <a href="#">Beğen</a>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary reply-btn" data-id="@a.ID">
+                                                        Cevap Yaz
+                                                    </button>
+
+                                                    <div class="reply-box" style="display:none; margin-top:10px;background-color:lightgoldenrodyellow;border:5px solid gray;padding:20px;">
+
+                                                        @using (Html.BeginForm("PartialYorumKaydet2", "AnaSayfa", FormMethod.Post))
+                                                        {
+                                                            <span>UST YORUM ID</span>
+                                                            <input type="text" name="USTYID" value="@a.ID" class="form-control" />
+                                                            <span>BLOG ID</span>
+                                                            <input type="text" name="BLOGID" value="@ViewBag.idd" class="form-control" />
+                                                            <input type="text" name="ADSOYAD" placeholder="Adınız..."  class="form-control"/>
+                                                            <div class="rating">
+                                                                <input type="radio" name="YILDIZ-@a.ID" value="5" id="5-@a.ID"><label for="5-@a.ID">☆</label>
+                                                                <input type="radio" name="YILDIZ-@a.ID" value="4" id="4-@a.ID"><label for="4-@a.ID">☆</label>
+                                                                <input type="radio" name="YILDIZ-@a.ID" value="3" id="3-@a.ID"><label for="3-@a.ID">☆</label>
+                                                                <input type="radio" name="YILDIZ-@a.ID" value="2" id="2-@a.ID"><label for="2-@a.ID">☆</label>
+                                                                <input type="radio" name="YILDIZ-@a.ID" value="1" id="1-@a.ID"><label for="1-@a.ID">☆</label>
+                                                            </div>
+                                                            <textarea name="Yorum" class="form-control mb-2" placeholder="Cevabınızı yazın..."></textarea>
+
+                                                            <button type="submit" class="btn btn-success btn-sm">
+                                                                Gönder
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ol>
+                            </li>
+                        }
+                    </ol>
+                </li>
+            }
+        </ol>
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $(".reply-btn").click(function (e) {
+            e.stopPropagation();
+
+            // sadece bu yorumun içindeki reply-box açılır
+            var box = $(this).closest(".comment-content").find(".reply-box");
+
+            // diğerlerini kapat
+            $(".reply-box").not(box).slideUp();
+
+            // bunu aç/kapat
+            box.slideToggle();
+        });
+
+        // dışarı tıkla → kapat
+        $(document).click(function () {
+            $(".reply-box").slideUp();
+        });
+
+        // içeride tıklayınca kapanmasın
+        $(".reply-box").click(function (e) {
+            e.stopPropagation();
+        });
+
+    });
+</script>
+

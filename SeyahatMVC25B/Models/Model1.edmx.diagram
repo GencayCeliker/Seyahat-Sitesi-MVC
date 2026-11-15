@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="88b1e8bafd064abab89873acc6097ecc" Name="Diagram1">
+        <EntityTypeShape EntityType="DbSeyahat25BModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLBLOG" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLBLOGRESIMLER" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLHAKKIMDA" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLICERIK" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLKATEGORI" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLKULLANICI" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLUYELER" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbSeyahat25BModel.TBLYORUMLAR" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="DbSeyahat25BModel.FK_TBLBLOG_TBLKATEGORI" ManuallyRouted="false" />
+        <AssociationConnector Association="DbSeyahat25BModel.FK_TBLBLOGRESIMLER_TBLBLOG" ManuallyRouted="false" />
+        <AssociationConnector Association="DbSeyahat25BModel.FK_TBLYORUMLAR_TBLBLOG" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

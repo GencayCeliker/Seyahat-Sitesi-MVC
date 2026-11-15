@@ -1,0 +1,20 @@
+﻿@model SeyahatMVC25B.Models.TBLICERIK
+@{
+    ViewBag.Title = "IcerikGoster";
+    Layout = "~/Views/Shared/LayoutGezi.cshtml";
+}
+
+<h2>@Model.BASLIK</h2>
+
+<h5>
+    @Model.TARIH.Value.ToString("dd.MMMM.yyyy") &nbsp;&nbsp;&nbsp;
+
+    @if (Model.DOSYA != null)
+    {
+        <a href="~/Dosyalar/@Model.DOSYA" target="_blank">
+        <span style="color:green;">PDF Göster</span></a>
+    }
+
+</h5>
+
+@Html.Raw(Model.ICERIK)

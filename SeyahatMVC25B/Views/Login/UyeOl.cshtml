@@ -1,0 +1,265 @@
+﻿@using SeyahatMVC25B.Models
+@model TBLUYELER
+
+
+@{
+    Layout = null;
+}
+<style>
+    .colorgraph {
+        height: 5px;
+        border-top: 0;
+        background: #c4e17f;
+        border-radius: 5px;
+        background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    }
+</style>
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UyeOl</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <br /><br />
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+                @using (Html.BeginForm("UyeOl", "Login", FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
+                {
+                    <h2>Üye Ol</h2>
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.AD, new { placeholder = "Adınızı Giriniz", @class = "form-control input-lg" })
+
+                                @Html.ValidationMessageFor(x => x.AD, "", new { @style = "color:red;font-size:20px;" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.SOYAD, new { placeholder = "Soyadınızı Giriniz", @class = "form-control input-lg" })
+
+                                @Html.ValidationMessageFor(x => x.SOYAD, "", new { @style = "color:red;font-size:20px;" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <select class="form-control input-lg" name="DOGUMTARIHI">
+                                    <option value="">Seçiniz</option>
+                                    @for (int i = 1950; i <= DateTime.Now.Year; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+
+                                <select id="meslek" name="MESLEK" class="form-control input-lg">
+                                    <option value="">--Meslek Seçiniz--</option>
+                                    <option value="yazilimci">Yazılım Geliştirici</option>
+                                    <option value="muhendis">Mühendis</option>
+                                    <option value="ogretmen">Öğretmen</option>
+                                    <option value="doktor">Doktor</option>
+                                    <option value="tasarimci">Grafik Tasarımcı</option>
+                                    <option value="teknisyen">Teknisyen</option>
+                                    <option value="ogrenci">Öğrenci</option>
+                                    <option value="diger">Diğer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+
+                                <select name="DOGUMYERI" required class="form-control input-lg">
+                                    <option value="">Doğum Yeri Seçiniz</option>
+                                    @foreach (var x in ViewBag.sehirler)
+                                    {
+                                        <option value="@x">@x</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                Cinsiyet Seçiniz:
+                                <input type="radio" name="CINSIYET" checked value="K" /><b>Kadın</b>
+
+                                <input type="radio" name="CINSIYET" value="E" /><b>Erkek</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <b>Resim Ekle</b>
+                                    <input class="form-control input-lg"
+                                           id="resim"
+                                           type="file"
+                                           onchange="$('.resim')[0].src = window.URL.createObjectURL(this.files[0])"
+                                           name="RESIM" />
+
+                                    <img class="resim" id="secilenresim" style="width:140px; height:130px;border:3px solid red;margin-left:20px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.MAIL, new { placeholder = "mail Giriniz", @class = "form-control input-lg" })
+
+                                @Html.ValidationMessageFor(x => x.MAIL, "", new { @style = "color:red;font-size:20px;" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.TEL, new { placeholder = "tel Giriniz", @class = "form-control input-lg" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <select name="OGRENIMDURUMU" required id="ogrenim" class="form-control input-lg">
+                                    <option value="">Öğrenim Durumu Seçiniz</option>
+                                    <option value="ilkokul">İlkokul</option>
+                                    <option value="ortaokul">Ortaokul</option>
+                                    <option value="lise">Lise</option>
+                                    <option value="onlisans">Ön Lisans</option>
+                                    <option value="lisans">Lisans</option>
+                                    <option value="yukseklisans">Yüksek Lisans</option>
+                                    <option value="doktora">Doktora</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.SIFRE, new { placeholder = "şifre Giriniz", @class = "form-control input-lg" })
+
+                                    @Html.ValidationMessageFor(x => x.SIFRE, "", new { @style = "color:red;font-size:20px;" })
+                                </div>
+                            </div>
+
+                             <div class="col-xs-12 col-sm-6 col-md-6">
+                                 <div class="form-group">
+                                     @Html.TextBoxFor(x => x.SIFRETEKRAR, new { placeholder = "şifre Giriniz", @class = "form-control input-lg" })
+
+                                     @Html.ValidationMessageFor(x => x.SIFRETEKRAR, "", new { @style = "color:red;font-size:20px;" })
+                                 </div>
+                            </div>
+                        </div>
+
+                 
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6"><input type="submit" value="ÜYE OL" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                        <div class="col-xs-12 col-md-6"><a href="#" class="btn btn-success btn-block btn-lg">GİRİŞ YAP</a></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <br />
+
+        <h3 style="color:red;">@ViewBag.error</h3>
+
+    </div>
+</body>
+</html>
+
+<script>
+    $(function () {
+        $('.button-checkbox').each(function () {
+
+            // Settings
+            var $widget = $(this),
+                $button = $widget.find('button'),
+                $checkbox = $widget.find('input:checkbox'),
+                color = $button.data('color'),
+                settings = {
+                    on: {
+                        icon: 'glyphicon glyphicon-check'
+                    },
+                    off: {
+                        icon: 'glyphicon glyphicon-unchecked'
+                    }
+                };
+
+            // Event Handlers
+            $button.on('click', function () {
+                $checkbox.prop('checked', !$checkbox.is(':checked'));
+                $checkbox.triggerHandler('change');
+                updateDisplay();
+            });
+            $checkbox.on('change', function () {
+                updateDisplay();
+            });
+
+            // Actions
+            function updateDisplay() {
+                var isChecked = $checkbox.is(':checked');
+
+                // Set the button's state
+                $button.data('state', (isChecked) ? "on" : "off");
+
+                // Set the button's icon
+                $button.find('.state-icon')
+                    .removeClass()
+                    .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+                // Update the button's color
+                if (isChecked) {
+                    $button
+                        .removeClass('btn-default')
+                        .addClass('btn-' + color + ' active');
+                }
+                else {
+                    $button
+                        .removeClass('btn-' + color + ' active')
+                        .addClass('btn-default');
+                }
+            }
+
+            // Initialization
+            function init() {
+
+                updateDisplay();
+
+                // Inject the icon if applicable
+                if ($button.find('.state-icon').length == 0) {
+                    $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
+                }
+            }
+            init();
+        });
+    });
+</script>

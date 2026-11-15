@@ -1,0 +1,108 @@
+﻿
+@model SeyahatMVC25B.Models.TBLYORUMLAR
+
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 10px;
+            color: #FFD600;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }
+
+   
+
+    h1,
+    p {
+        text-align: center
+    }
+
+    h1 {
+        margin-top: 150px
+    }
+
+    p {
+        font-size: 1.2rem
+    }
+
+    @@media only screen and (max-width: 600px) {
+        h1 {
+            font-size: 14px
+        }
+
+        p {
+            font-size: 12px
+        }
+    }
+</style>
+
+
+
+<div class="leave-comment-area section_padding_50 clearfix">
+    <div class="comment-form">
+        <h4 class="mb-30">Sen de Bir Yorum Bırak....</h4>
+
+        <!-- Comment Form -->
+        <form method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" value="@ViewBag.idd" name="BLOGID">
+            </div>
+            (***hidden eklediğinde görünmez olur)
+
+
+            <div class="rating">
+                <input type="radio" required name="YILDIZ" value="5" id="5"><label for="5">☆</label> 
+                <input type="radio" required name="YILDIZ" value="4" id="4"><label for="4">☆</label> 
+                <input type="radio" required name="YILDIZ" value="3" id="3"><label for="3">☆</label> 
+                <input type="radio" required name="YILDIZ" value="2" id="2"><label for="2">☆</label> 
+                <input type="radio" required name="YILDIZ" value="1" id="1"><label for="1">☆</label>
+            </div>
+
+
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.ADSOYAD, new {@class="form-control",placeholder="Ad Soyad..."})
+            </div>
+
+            <div class="form-group">
+                @Html.TextAreaFor(x=>x.YORUM, new { @class = "form-control", placeholder = "Yorumunuz..." })
+            </div>
+
+            <div class="alert alert-danger">@ViewBag.soru</div>
+
+            <input type="text" name="kod" class="form-control" />
+
+            <button type="submit" class="btn contact-btn">GÖNDER</button>
+        </form>
+
+        <h4>@ViewBag.error</h4>
+    </div>
+</div>

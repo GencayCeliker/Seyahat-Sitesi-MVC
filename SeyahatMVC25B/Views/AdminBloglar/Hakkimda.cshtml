@@ -1,0 +1,61 @@
+﻿@model SeyahatMVC25B.Models.TBLHAKKIMDA
+
+@{
+    ViewBag.Title = "Hakkimda";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Hakkimda</h2>
+
+@using (Html.BeginForm("HakkimdaKaydet", "AdminBloglar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x.ID)
+        @Html.TextBoxFor(x => x.ID, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.ADSOYAD)
+        @Html.TextBoxFor(x => x.ADSOYAD, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.ADRES)
+        @Html.TextBoxFor(x => x.ADRES, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.TEL)
+        @Html.TextBoxFor(x => x.TEL, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.INSTAGRAM)
+        @Html.TextBoxFor(x => x.INSTAGRAM, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.FACE)
+        @Html.TextBoxFor(x => x.FACE, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(x => x.HAKKIMDA)
+        @Html.TextAreaFor(x => x.HAKKIMDA, new { @class = "form-control", required = "required" })
+    </div>
+    <br />
+
+    <div class="form-group row">
+        @Html.LabelFor(x => x.FOTO)
+        <input class="form-control col-md-6"
+               id="resim"
+               @*required*@ @*güncellemede dosya eklemeyebilir*@
+               type="file"
+               onchange="$('.resim')[0].src = window.URL.createObjectURL(this.files[0])"
+               name="RESIM" />
+
+        <img class="resim" id="secilenresim" style="width:200px; height:180px;border:3px solid red;margin-left:20px;" src="~/ResimlerGezi/@Model.FOTO" />
+    </div>
+
+    <button class="btn btn-primary">GÜNCELLE</button>
+}

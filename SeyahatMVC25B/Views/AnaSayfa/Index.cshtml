@@ -1,0 +1,381 @@
+﻿@using SeyahatMVC25B.Models
+@model Sinifim
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutGezi.cshtml";
+}
+
+<!-- ****** Welcome Post Area Start ****** -->
+<section class="welcome-post-sliders owl-carousel">
+
+    @foreach (var x in Model.bloglistesi)
+    {
+        <div class="welcome-single-slide">
+            <!-- Post Thumb -->
+            <a href="/AnaSayfa/Detay/@x.BLOGID">
+                <img src="~/ResimlerGezi/@x.RESIM" height="300" alt="">
+            </a>
+            <!-- Overlay Text -->
+            <div class="project_title">
+                <div class="post-date-commnents d-flex">
+                    <a href="#">@x.TARIH.Value.ToString("dd.MM.yyyy")</a>
+                    <a href="#">5 Yorum</a>
+                </div>
+                <a href="/AnaSayfa/Detay/@x.BLOGID">
+                    <h5>@x.BASLIK</h5>
+                </a>
+            </div>
+        </div>
+    }
+    <!-- Single Slide -->
+
+
+
+
+</section>
+<!-- ****** Welcome Area End ****** -->
+<!-- ****** Categories Area Start ****** -->
+<section class="categories_area clearfix" id="about">
+    <div class="container">
+        <div class="row">
+            @foreach (var x in Model.kategoriler.OrderByDescending(x => x.KATEGORIID).Take(3).ToList())
+            //KATEGORI sayısı 3 ten fazla olduğunda hata vermemesi için
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single_catagory wow fadeInUp" data-wow-delay=".3s">
+                        <img src="~/ResimlerGezi/@x.RESIM" height="200" alt="">
+                        <div class="catagory-title">
+                            <a href="#">
+                                <h5>@x.KATEGORI</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- ****** Categories Area End ****** -->
+<!-- ****** Blog Area Start ****** -->
+<section class="blog_area section_padding_0_80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="row">
+
+                    <!-- Single Post -->
+                    <div class="col-12">
+                        <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                            <!-- Post Thumb -->
+                            <div class="post-thumb">
+                                <img src="~/ResimlerGezi/@Model.bloglistesi.OrderByDescending(x=>x.BLOGID).Take(1).FirstOrDefault().RESIM" height="500" alt="">
+                            </div>
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="post-meta d-flex">
+                                    <div class="post-author-date-area d-flex">
+                                        <!-- Post Author -->
+                                        <div class="post-author">
+                                            <a href="#">@Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().YAZAR</a>
+                                        </div>
+                                        <!-- Post Date -->
+                                        <div class="post-date">
+                                            <a href="#">@Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().TARIH.Value.ToString("dd.MMMM.yyyy")</a>
+                                        </div>
+                                    </div>
+                                    <!-- Post Comment & Share Area -->
+                                    <div class="post-comment-share-area d-flex">
+                                        <!-- Post Favourite -->
+                                        <div class="post-favourite">
+                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> @Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().BEGENI</a>
+                                        </div>
+                                        <!-- Post Comments -->
+                                        <div class="post-comments">
+                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                        </div>
+
+                                        <!-- Post Share -->
+                                        <div class="post-share">
+                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <h2 class="post-headline">@Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().BASLIK</h2>
+                                </a>
+                                <p>@Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().OZET</p>
+                                <a href="/AnaSayfa/Detay/@Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(1).FirstOrDefault().BLOGID" class="read-more">Devamı...</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    @{
+                        var songeziler = Model.bloglistesi;
+
+                        if (Model.bloglistesi.Count > 4)
+                        {
+                            songeziler = Model.bloglistesi.OrderByDescending(x => x.BLOGID).Take(4).ToList();
+                        }
+                        else
+                        {
+                            songeziler = Model.bloglistesi.ToList();
+                        }
+                    }
+
+                    @foreach (var x in songeziler)
+                    {
+                        <!-- Single Post -->
+                        <div class="col-12 col-md-6">
+                            <div class="single-post wow fadeInUp" data-wow-delay=".4s">
+                                <!-- Post Thumb -->
+                                <div class="post-thumb">
+                                    <a href="/AnaSayfa/Detay/@x.BLOGID">
+                                        <img src="~/ResimlerGezi/@x.RESIM" height="200" alt="">
+                                    </a>
+                                </div>
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <div class="post-meta d-flex">
+                                        <div class="post-author-date-area d-flex">
+                                            <!-- Post Author -->
+                                            <div class="post-author">
+                                                <a href="#">@x.YAZAR</a>
+                                            </div>
+                                            <!-- Post Date -->
+                                            <div class="post-date">
+                                                <a href="#">@x.TARIH.Value.ToString("dd.MMMM.yyyy")</a>
+                                            </div>
+                                        </div>
+                                        <!-- Post Comment & Share Area -->
+                                        <div class="post-comment-share-area d-flex">
+                                            <!-- Post Favourite -->
+                                            <div class="post-favourite">
+                                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> @x.BEGENI</a>
+                                            </div>
+                                            <!-- Post Comments -->
+                                            <div class="post-comments">
+                                                <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                            </div>
+                                            <!-- Post Share -->
+                                            <div class="post-share">
+                                                <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="/AnaSayfa/Detay/@x.BLOGID">
+                                        <h4 class="post-headline">@x.BASLIK</h4>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*EN ÇOK BEĞENİLEN BLOGLAR*@
+
+                    @foreach (var x in Model.bloglistesi.OrderByDescending(x => x.BEGENI).Take(3).ToList())
+                    {
+
+                        <div class="col-12">
+                            <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".2s">
+                                <!-- Post Thumb -->
+                                <div class="post-thumb">
+                                    <img src="~/ResimlerGezi/@x.RESIM" alt="">
+                                </div>
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <div class="post-meta d-flex">
+                                        <div class="post-author-date-area d-flex">
+                                            <!-- Post Author -->
+                                            <div class="post-author">
+                                                <a href="#">@x.YAZAR</a>
+                                            </div>
+                                            <!-- Post Date -->
+                                            <div class="post-date">
+                                                <a href="#">@x.TARIH.Value.ToString("dd.MMMM.yyyy")</a>
+                                            </div>
+                                        </div>
+                                        <!-- Post Comment & Share Area -->
+                                        <div class="post-comment-share-area d-flex">
+                                            <!-- Post Favourite -->
+                                            <div class="post-favourite">
+                                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> @x.BEGENI</a>
+                                            </div>
+                                            <!-- Post Comments -->
+                                            <div class="post-comments">
+                                                <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                            </div>
+                                            <!-- Post Share -->
+                                            <div class="post-share">
+                                                <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#">
+                                        <h4 class="post-headline">@x.BASLIK</h4>
+                                    </a>
+                                    @if (x.OZET.Length < 100)
+                                    {
+                                        <p>@x.OZET</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@x.OZET.Substring(0, 100)...</p>
+                                    }
+
+                                    <a href="/AnaSayfa/Detay/@x.BLOGID" class="read-more">Devamı..</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                </div>
+            </div>
+
+            <!-- ****** Blog Sidebar ****** -->
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="blog-sidebar mt-5 mt-lg-0">
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area about-me-widget text-center">
+                        <div class="widget-title">
+                            <h6>HAKKIMDA</h6>
+                        </div>
+                        <div class="about-me-widget-thumb">
+                            <img src="~/ResimlerGezi/@Model.hakkimda.FOTO" alt="">
+                        </div>
+                        <h4 class="font-shadow-into-light">@Model.hakkimda.ADSOYAD</h4>
+                        <p>@Model.hakkimda.HAKKIMDA</p>
+                    </div>
+
+
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area popular-post-widget">
+                        <div class="widget-title text-center">
+                            <h6>EN ÇOK YORUM ALANLAR</h6>
+                            <h2>güncelle</h2>
+                        </div>
+
+                        @foreach (var x in Model.bloglistesi)
+                        {
+                            <div class="single-populer-post d-flex">
+                                <img src="~/ResimlerGezi/@x.RESIM" alt="">
+                                <div class="post-content">
+                                    <a href="/AnaSayfa/Detay/@x.BLOGID">
+                                        <h6>@x.BASLIK</h6>
+                                    </a>
+                                    <a href="/AnaSayfa/Detay/@x.BLOGID">
+
+                                        @if (x.OZET.Length < 50)
+                                        {
+                                            <p>@x.OZET</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@x.OZET.Substring(0, 50)...</p>
+                                        }
+
+                                    </a>
+                                    <p><b>@x.TARIH.Value.ToString("dd.MM.yyyy")</b></p>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area add-widget text-center">
+                        <div class="add-widget-area">
+                            <img src="~/tema/img/sidebar-img/6.jpg" alt="">
+                            <div class="add-text">
+                                <div class="yummy-table">
+                                    <div class="yummy-table-cell">
+                                        <h2>Cooking Book</h2>
+                                        <p>Buy Book Online Now!</p>
+                                        <a href="#" class="add-btn">Buy Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area newsletter-widget">
+                        <div class="widget-title text-center">
+                            <h6>Newsletter</h6>
+                        </div>
+                        <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                        <div class="newsletter-form">
+                            <form action="#" method="post">
+                                <input type="email" name="newsletter-email" id="email" placeholder="Your email">
+                                <button type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ****** Blog Area End ****** -->
+<!-- ****** Instagram Area Start ****** -->
+<div class="instargram_area owl-carousel section_padding_100_0 clearfix" id="portfolio">
+
+    @foreach (var x in Model.blogresimleri)
+    {
+        <div class="instagram_gallery_item">
+            <!-- Instagram Thumb -->
+            <img src="~/ResimlerGezi/@x.RESIM" height="150" alt="">
+            <!-- Hover -->
+            <div class="hover_overlay">
+                <div class="yummy-table">
+                    <div class="yummy-table-cell">
+                        <div class="follow-me text-center">
+                            <a href="/AnaSayfa/Detay/@x.BLOG"><i class="fa fa-instagram" aria-hidden="true"></i>Burası Neresi:)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
+<!-- ****** Our Creative Portfolio Area End ****** -->
+<!-- ****** Footer Social Icon Area Start ****** -->
+<div class="social_icon_area clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer-social-area d-flex">
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i><span>facebook</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i><span>GOOGLE+</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i><span>linkedin</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-vimeo" aria-hidden="true"></i><span>VIMEO</span></a>
+                    </div>
+                    <div class="single-icon">
+                        <a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i><span>YOUTUBE</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ****** Footer Social Icon Area End ****** -->
+<!-- ****** Footer Menu Area Start ****** -->

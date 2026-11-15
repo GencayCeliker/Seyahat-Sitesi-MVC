@@ -1,0 +1,113 @@
+﻿@using SeyahatMVC25B.Models
+@model List<TBLBLOG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/toastr.js"></script>
+
+<h2>BLOGLAR</h2>
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+           
+            <a href="/AdminBloglar/BlogEkle" class="btn btn-primary">Yeni Blog Ekle</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> RESİM </th>
+                            <th> BAŞLIK </th>
+                            <th> BEGENİ </th>
+                            <th> KATEGORİ </th>
+                            <th> GÖRÜNTÜLENME </th>
+                            <th> YAZAR </th>
+                            <th> TARIH </th>
+                            <th>SİL</th>
+                            <th>GÜNCELLE</th>
+                            <th>GÖRSEL EKLE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.BLOGID</td>
+                                <td class="py-1">
+                                    <img src="~/ResimlerGezi/@x.RESIM" style="width:100px;height:100px;" alt="image" />
+                                </td>
+                                <td> @x.BASLIK </td>
+                                <td> @x.BEGENI </td>
+                                <td> @x.TBLKATEGORI.KATEGORI </td>
+                                <td> @x.GORUNTULENME </td>
+                                <td> @x.YAZAR </td>
+                                <td> @x.TARIH.Value.ToString("dd.MM.yy") </td>
+                                <td><a href="" class="btn btn-danger">SİL</a></td>
+                                <td><a href="/AdminBloglar/BlogGetir/@x.BLOGID" class="btn btn-success">GÜNCELLE</a></td>
+                                <td><a href="/AdminBloglar/Gorseller/@x.BLOGID" class="btn btn-outline-warning">GÖRSEL EKLE</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["ekle"]!=null)
+{
+    <script>       
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr["success"]("Yeni blog kaydınız tamamlandı!")
+    </script>
+}
+
+@if (TempData["kaydet"]!=null)
+{
+    <script>
+       
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr["success"]("Blog kaydınız güncellendi!")
+    </script>
+}

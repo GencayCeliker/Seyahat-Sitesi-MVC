@@ -1,0 +1,34 @@
+﻿@using SeyahatMVC25B.Models
+@model List<TBLICERIK>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>İÇERİK SAYFALARI</h2>
+<a href="/Icerik/Ekle" class="btn btn-primary">Yeni İçerik Ekle</a>
+<br /><br />
+<table class="table table-bordered">
+    <tr>
+        <td>ID</td>
+        <td>BAŞLIK</td>
+        <td>TARİH</td>
+        <td>DOSYA</td>
+        <td>SİL</td>
+        <td>GÜNCELLE</td>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.ID</td>
+            <td>@x.BASLIK</td>
+            <td>@x.TARIH.Value.ToString("dd.MMMM.yyyy")</td>
+
+            <td><a href="~/Dosyalar/@x.DOSYA" target="_blank">@x.DOSYA</a></td>
+
+            <td><a href="" class="btn btn-danger">SİL</a></td>
+            <td><a href="/Icerik/IcerikGetir/@x.ID" class="btn btn-success">GÜNCELLE</a></td>            
+        </tr>
+    }
+</table>

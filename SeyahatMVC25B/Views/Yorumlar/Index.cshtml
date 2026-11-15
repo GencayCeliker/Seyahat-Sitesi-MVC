@@ -1,0 +1,163 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using SeyahatMVC25B.Models
+@model PagedList.IPagedList<TBLYORUMLAR>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.21/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.21/dist/sweetalert2.min.css
+" rel="stylesheet">
+
+@{
+    string isim = "aa";
+}
+
+<h2>Yorumlar</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td>ID</td>
+        <td>ADSOYAD</td>
+        <td>TARİH</td>
+        <td>YORUM</td>
+        <td>BLOG</td>
+        <td>YILDIZ</td>
+        <td>DURUM</td>
+        <td>SİL</td>
+        <td>SİL2</td>
+    </tr>
+    @foreach (var x in Model)
+    {
+        isim = isim + x.ID;
+
+        string renk;
+        if (x.DURUM == false)
+        {
+            renk = "antiquewhite";
+        }
+        else
+        {
+            renk = "lavender";
+        }
+        <tr style="background-color:@renk">
+            <td>@x.ID</td>
+            <td>@x.ADSOYAD</td>
+            <td>@(x.TARIH.HasValue ? x.TARIH.Value.ToString("dd.MM.yy") : "")</td>
+            <td>@x.YORUM</td>
+            <td>@(x.TBLBLOG != null ? x.TBLBLOG.BASLIK : "(silinmiş blog)")</td>
+            <td>
+                @for (int i = 0; i < x.YILDIZ; i++)
+                {
+                    <img src="~/ResimlerGezi/icons8-star-48.png" width="30" />
+                }
+            </td>
+            <td>
+                @if (x.DURUM == false)
+                {
+                    <a href="/Yorumlar/GosterGizle/@x.ID" class="btn btn-danger btn-sm">GÖRÜNÜR YAP</a>
+                }
+                else
+                {
+                    <a href="/Yorumlar/GosterGizle/@x.ID" class="btn btn-success btn-sm">GİZLİ YAP</a>
+                }
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@isim">
+                    POPUP_SİL
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="@isim" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">YORUM SİLME</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <strong>@x.ADSOYAD</strong>  kişisine ait yorumu silmek istediğinize emin misiniz?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">KAPAT</button>
+                                <a href="/Yorumlar/YorumSil/@x.ID" class="btn btn-primary">SİL</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a href="/Yorumlar/YorumSil/@x.ID"
+                   class="btn btn-success btn-sm deleteBtn">SWEET-SİL</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new {sayfa}))
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+    document.querySelectorAll(".deleteBtn").forEach(function (button) {
+
+        button.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            var url = this.getAttribute("href");
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title:'<span style="color:black;">Emin misiniz?</span>',               
+                text: "Yorumunuz kalıcı olarak silinsin mi?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "SİL",
+                cancelButtonText: "Vazgeç",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    window.location.href = url;
+                    this.closest("tr").remove();
+
+                    swalWithBootstrapButtons.fire({
+                        title: '<span style="color:black;">Silindi</span>',
+                        text: "Yorumunuz Silindi",
+                        icon: "success"
+                    });
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                        title:'<span style="color:black;">İPTAL</span>',
+                        text: "İşleminiz iptal edildi",
+                        icon: "error"
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
+

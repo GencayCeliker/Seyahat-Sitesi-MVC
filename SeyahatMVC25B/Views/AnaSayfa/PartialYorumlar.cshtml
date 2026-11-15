@@ -1,0 +1,48 @@
+﻿@using SeyahatMVC25B.Models
+@model List<TBLYORUMLAR>
+
+
+
+
+
+
+
+
+<div class="comment_area section_padding_50 clearfix">
+    <h4 class="mb-30">@Model.Count() YORUM</h4>
+
+    <ol>
+        <!-- Single Comment Area -->
+        @foreach (var x in Model)
+        {
+            <li class="single_comment_area">
+                <div class="comment-wrapper d-flex">
+                    <!-- Comment Meta -->
+                    <div class="comment-author">
+                        <img src="~/ResimlerGezi/yorum.png" alt="">
+                    </div>
+                    <!-- Comment Content -->
+                    <div class="comment-content">
+                        <span class="comment-date text-muted">@x.TARIH.Value.ToString("dd.MMM.yyyy")</span>
+
+                        <div class="row">
+                            <h5>@x.ADSOYAD</h5> &nbsp;&nbsp;&nbsp;
+                            @for (int i = 0; i < x.YILDIZ; i++)
+                            {
+                                <img src="~/ResimlerGezi/icons8-star-48.png" width="30" />
+                            }
+                            @for (int i = 0; i < 5-x.YILDIZ; i++)
+                            {
+                        <img src="~/ResimlerGezi/icons8-star-48 (1).png" width="30" />
+                            }
+
+
+                        </div>
+
+                        <p>@x.YORUM</p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ol>
+</div>
