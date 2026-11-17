@@ -67,3 +67,7 @@ SeyahatMVC25B/
 | --- | --- |
 | Yönetici | `zk` |
 | Üye | `a` |
+
+## 📄 Lisans
+
+Bu proje [MIT](LICENSE) lisansı altında sunulmuştur.
