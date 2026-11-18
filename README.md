@@ -10,6 +10,19 @@ Gezi yazılarının yayınlandığı, ziyaretçilerin yorum yapabildiği ve yön
 
 ---
 
+## 🎬 Demo
+
+![demo](docs/demo.gif)
+
+Ana sayfa, blog detayı (puan, hava durumu, son geziler) ve yönetim paneli girişi.
+
+| Ana sayfa | Blog detayı |
+| --- | --- |
+| ![Ana sayfa](docs/anasayfa.png) | ![Blog detayı](docs/blog-detay.png) |
+
+> Görüntüler, depodaki kurulum script'iyle kurulan örnek veritabanı üzerinde uygulama çalıştırılarak alınmıştır.
+
+
 ## 🚀 Özellikler
 
 ### 🌍 Ziyaretçi tarafı
